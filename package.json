@@ -1,0 +1,13 @@
+{
+  "name": "javascript-lisp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "node src/test.js"
+  },
+  "keywords": [],
+  "author": "lis Vathi <elisvathi@outlook.com>",
+  "license": "ISC"
+}
