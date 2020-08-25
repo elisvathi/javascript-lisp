@@ -6,5 +6,6 @@ const {
 const fs = require('fs');
 const code = fs.readFileSync("examples/test.lisp").toString();
 const parsed = parse(code);
-const result = parsed.map(eval_code).filter(x => x !== null);
+const initialScope = {definitions: {}, variables: {}};
+const result = parsed.map(x=>eval_code(x, [ initialScope ])).filter(x => x !== null);
 result.filter(x => x !== null && x !== undefined).forEach(x => console.log(printItem(x)));

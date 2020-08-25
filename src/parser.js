@@ -17,7 +17,7 @@ function lex(inputText) {
         "(": "\\(\\s*",
         ")": "\\s*\\)",
         quote: "'",
-        eof: "\Z",
+        eof: "Z",
     };
     const match = Object.keys(regexps)
         .map((key) => {

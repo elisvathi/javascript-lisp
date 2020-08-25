@@ -138,9 +138,13 @@
        (div (- a b)
             b)))))
 
+(defun mod (a b)
+  (let (d (div a b))
+          (- a (* d b))))
+
 (defun map (fn l)
   (cond
-   ((atom l) '())
+   ((eq l '()) '())
    ('t
     (cons (fn (car l)) (map fn
                             (cdr l))))))
@@ -245,4 +249,20 @@
                              2)
                         a))))))
 
-(defun = (a b) (eq a b))
+(defun = (a b)
+  (eq a b))
+
+(defun filter (f a)
+  (cond
+   ((eq a '()) a)
+   ('t
+    (let (first (f (car a)))
+      (cond
+       ((eq first '())
+        (filter f
+                (cdr a)))
+       ('t
+        (cons (car a) (filter f
+                            (cdr a)))))))))
+
+(defun if (exp then else) (cond (exp then) ('t else)))

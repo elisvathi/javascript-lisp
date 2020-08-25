@@ -9,5 +9,6 @@
   },
   "keywords": [],
   "author": "lis Vathi <elisvathi@outlook.com>",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {}
 }
