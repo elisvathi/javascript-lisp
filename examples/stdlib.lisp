@@ -139,7 +139,7 @@
             b)))))
 
 (defun mod (a b)
-  (let (d (div a b))
+  (let ( (d (div a b)) )
           (- a (* d b))))
 
 (defun map (fn l)
@@ -160,17 +160,17 @@
 
 (defun length (l)
   (cond
-   ((atom l) '0)
+   ((atom l) 0)
    ('t
-    (+ '1
+    (+ 1
        (length (cdr l))))))
 
 (defun range (a)
   (cond
-   ((eq '0 a) '())
+   ((eq 0 a) '())
    ('t
-    (append (range (- a '1))
-            (list (- a '1))))))
+    (append (range (- a 1))
+            (list (- a 1))))))
 
 (defun sum (a)
   (reduce (lambda (accum item)
@@ -187,12 +187,12 @@
 (defun get-element (l i)
   (cond
    ((atom l) '())
-   ((< i '0) '())
-   ((eq i '0)
+   ((< i 0) '())
+   ((eq i 0)
     (car l))
    ('t
     (get-element (cdr l)
-                 (- i '1)))))
+                 (- i 1)))))
 
 (defun reverse (a)
   (cond
@@ -211,18 +211,18 @@
 
 (defun take (s a)
   (cond
-   ((eq s '0) '())
+   ((eq s 0) '())
    ((null a) '())
    ('t
-    (cons (car a) (take (- s '1)
+    (cons (car a) (take (- s 1)
                         (cdr a))))))
 
 (defun drop (s a)
   (cond
-   ((eq s '0) a)
+   ((eq s 0) a)
    ((null a) '())
    ('t
-    (drop (- s '1)
+    (drop (- s 1)
           (cdr a)))))
 
 (defun merge (a b)
@@ -256,7 +256,7 @@
   (cond
    ((eq a '()) a)
    ('t
-    (let (first (f (car a)))
+    (let ( (first (f (car a))) )
       (cond
        ((eq first '())
         (filter f

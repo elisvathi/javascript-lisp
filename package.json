@@ -2,13 +2,14 @@
   "name": "javascript-lisp",
   "version": "1.0.0",
   "description": "",
-  "main": "src/index.js",
+  "main": "index.js",
   "scripts": {
-    "start": "node src/index.js",
-    "test": "node src/test.js"
+    "start": "node index.js"
   },
   "keywords": [],
   "author": "lis Vathi <elisvathi@outlook.com>",
   "license": "ISC",
-  "dependencies": {}
+  "dependencies": {
+    "chalk": "^4.1.0"
+  }
 }

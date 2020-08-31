@@ -61,8 +61,7 @@ const primitive_functions = {
             definitions: {},
             variables: {}
         });
-        const defs = rest.slice(0, rest.length - 1);
-        const exp = rest[rest.length - 1];
+        const [defs, exp] = rest;
         for (const def of defs) {
             const [name, defExp] = def;
             eval_code(["defvar", name, eval_code(defExp, scope)], scope);
@@ -78,6 +77,12 @@ const primitive_functions = {
         }
         return eval_code(ref, scope);
     },
+    quit: () => {
+        process.exit(0);
+    },
+    clear: () => {
+        console.clear();
+    },
     defvar: (rest, scope) => {
         const dvName = rest[0];
         const dvValue = eval_code(rest[1], scope);
@@ -85,9 +90,22 @@ const primitive_functions = {
         return null;
     },
     require: (rest, scope) => {
-        const file = fs.readFileSync(eval_code(rest[0], scope)).toString();
+        const filename = eval_code(rest[0], scope);
+        if (!required_files[filename]) {
+            const file = fs.readFileSync(filename).toString();
+            const parsed = parse(file);
+            const result = parsed.map(x => eval_code(x, scope));
+            result.filter(x => x !== null && x !== undefined).forEach(x => console.log(printItem(x)));
+            required_files[filename] = true;
+        }
+    },
+    reload: (rest, scope) => {
+        const filename = eval_code(rest[0], scope);
+        const file = fs.readFileSync(filename).toString();
         const parsed = parse(file);
-        parsed.forEach(x => eval_code(x, scope));
+        const result = parsed.map(x => eval_code(x, scope));
+        result.filter(x => x !== null && x !== undefined).forEach(x => console.log(printItem(x)));
+        required_files[filename] = true;
     },
     "n-global": (rest, scope) => {
         const g = global || window;
@@ -176,7 +194,7 @@ function eval_code(t, scope) {
                 return handleOperator(primitive_operators[first], rest, scope);
             }
             if (first instanceof Array) {
-                if (first[0].toString().toLowerCase() === "lambda") {
+                if (first[0] && first[0].toString().toLowerCase() === "lambda") {
                     const args = rest.map((x) => eval_code(x, scope));
                     let [_, params, exp] = first;
                     if (!(params instanceof Array)) {
@@ -210,6 +228,7 @@ function replaceInExp(exp, args) {
     }
 }
 
+const required_files = {};
 
 function saveVariable(name, value, scope) {
     scope[scope.length - 1].variables[name] = value;
